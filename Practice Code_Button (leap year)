@@ -1,4 +1,4 @@
-bocy: Column( children:
+body: Column( children:
 
 Text (basic. Prognam ),
 
