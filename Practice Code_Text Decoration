@@ -28,11 +28,11 @@ class _MyScreenState extends State<MyScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'kashyap',   //app name shown from package name and for main title this is.
+      title: 'Digvijay',   //app name shown from package name and for main title this is.
       theme: ThemeData(primarySwatch: Colors.cyan),   //theme of app
       home: Scaffold(   //scaffold
         appBar: AppBar(   //appbar for show scaffold title
-          title: const Text('kashyap'), //title of scaffold
+          title: const Text('Digvijay'), //title of scaffold
           centerTitle: true,
           toolbarHeight: 50,
         ),
