@@ -30,7 +30,7 @@ class _MyScreenState extends State<MyScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title:
-          'HARSH', //app name shown from package name and for main title this is.
+          'Digvijay', //app name shown from package name and for main title this is.
       theme: ThemeData(primarySwatch: Colors.yellow), //theme of app
       home: Scaffold(
         //scaffold
