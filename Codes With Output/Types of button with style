@@ -31,7 +31,7 @@ class _MyScreenState extends State<MyScreen> {
     return MaterialApp(
       title:
           'Digvijay', //app name shown from package name and for main title this is.
-      theme: ThemeData(primarySwatch: Colors.cyan), //theme of app
+      theme: ThemeData(primarySwatch: Colors.yellow), //theme of app
       home: Scaffold(
         //scaffold
         appBar: AppBar(
@@ -51,20 +51,7 @@ class _MyScreenState extends State<MyScreen> {
                 print("Long Pressed");
               },
             ),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
-                  shadowColor: Colors.red,
-                  textStyle: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontStyle: FontStyle.italic),
-                ),
-                onPressed: () {
-                  print("Clicked");
-                },
-                child: const Text('Button1')), //ElevatedButton with styleForm
+
             ElevatedButton.icon(
               onPressed: () {
                 print("Clicked");
@@ -73,7 +60,10 @@ class _MyScreenState extends State<MyScreen> {
               icon: const Icon(Icons.call),
             ), //ElevetedButton with Icon
             OutlinedButton(
-              child: const Text('Digvijay.in'),
+              child: const Text(
+                'website.in',
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () {
                 print('Pressed');
               },
@@ -82,16 +72,25 @@ class _MyScreenState extends State<MyScreen> {
               onPressed: () {
                 print('Pressed');
               },
-              label: const Text('Visit Website'),
+              label: const Text(
+                'Visit Website',
+                style: TextStyle(color: Colors.black),
+              ),
               icon: const Icon(Icons.web),
             ),
             TextButton(
-                child: Text('Digvijay.in'),
+                child: Text(
+                  'Digvijay.in',
+                  style: TextStyle(color: Colors.black),
+                ),
                 onPressed: () {
                   print('Pressed');
                 }),
             TextButton.icon(
-                label: const Text('Digvijay.in'),
+                label: const Text(
+                  '123@gmail.com',
+                  style: TextStyle(color: Colors.black),
+                ),
                 icon: const Icon(Icons.email),
                 onPressed: () {
                   print('Pressed');
