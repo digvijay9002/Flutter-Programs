@@ -1,9 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart'; //importing packages in flutter
-import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
 
 void main() {
   runApp(MaterialApp(
@@ -43,12 +39,12 @@ class _MyScreenState extends State<MyScreen> {
         title: Text('Digvijay'), //title of scaffold
       ),
       body: ListView.builder(
-        itemCount: 20,
+        itemCount: 10,
         itemBuilder: (context, index) {
           return ListTile(
             leading: Icon(Icons.ac_unit_outlined),
             trailing: Icon(Icons.keyboard_arrow_right_sharp),
-            title: Text("DC INDEX ${index}"),
+            title: Text("DC index no ${index}"),
             subtitle: Text("Subtitle of index $index"),
             onTap: () {
               print("Taped button $index");
