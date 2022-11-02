@@ -1,0 +1,552 @@
+//TASK-7-Create Form
+import 'package:flutter/material.dart'; //importing packages in flutter
+import 'package:intl/intl.dart';
+
+var name = '';
+var email = '';
+var password = '';
+var confirmPassword = '';
+var date = '';
+var time = '';
+bool switchValue = false;
+bool checkSport = false;
+bool checkMusic = false;
+bool checkReading = false;
+double age = 0;
+
+void main() {
+  runApp(MaterialApp(
+    home: MyApp(),
+    title:
+        'T-7 Form', //app name shown from package name and for main title this is.
+    theme: ThemeData(primarySwatch: Colors.deepOrange),
+  )); //for run a code here class MyApp for run
+}
+
+//shortcut for stateless is stl
+class MyApp extends StatelessWidget {
+  //stateless widget class
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MyScreen(); //return to statefullwidget of MyScreen class
+  }
+}
+
+//shortcut for stateless is stf
+class MyScreen extends StatefulWidget {
+  const MyScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MyScreen> createState() => _MyScreenState();
+}
+
+//Gender value
+enum Gender { Male, Female, Other }
+
+class _MyScreenState extends State<MyScreen> {
+  Gender? groupGender = Gender.Male;
+
+  TextEditingController nameText = TextEditingController();
+  TextEditingController emailText = TextEditingController();
+  TextEditingController passwordText = TextEditingController();
+  TextEditingController confirmPasswordText = TextEditingController();
+  TextEditingController dateInput = TextEditingController();
+  TextEditingController timeInput = TextEditingController();
+
+  @override
+  void initState() {
+    dateInput.text = ""; //set the initial value of text field
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        //scaffold
+        appBar: AppBar(
+          //appbar for show scaffold title
+          iconTheme: IconThemeData(color: Colors.white, size: 12),
+          centerTitle: true,
+          title: Text(
+            'T-7 Form',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 25,
+                fontFamily: 'Times New Roman',
+                fontWeight: FontWeight.bold),
+          ), //title of scaffold
+          backgroundColor: Colors.yellow,
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(10),
+            child: ListView(
+              children: <Widget>[
+                Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(10),
+                    child: const Text(
+                      'Register',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Times New Roman',
+                          fontSize: 22),
+                    )),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    maxLength: 50,
+                    controller: nameText,
+                    decoration: const InputDecoration(
+                      counter: Offstage(),
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.black),
+                      ),
+                      labelText: 'Name',
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    maxLength: 30,
+                    controller: emailText,
+                    decoration: const InputDecoration(
+                      counter: Offstage(),
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.black),
+                      ),
+                      labelText: 'Email',
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: TextFormField(
+                    obscureText: true,
+                    maxLength: 20,
+                    controller: passwordText,
+                    decoration: const InputDecoration(
+                      counter: Offstage(),
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.black),
+                      ),
+                      labelText: 'Password',
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  child: TextFormField(
+                    obscureText: true,
+                    maxLength: 10,
+                    controller: confirmPasswordText,
+                    decoration: const InputDecoration(
+                      counter: Offstage(),
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.black),
+                      ),
+                      labelText: 'Confirm Password',
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
+                    const Text(
+                      'DOB : ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        height: MediaQuery.of(context).size.width / 5,
+                        child: Center(
+                            child: TextField(
+                          controller: dateInput,
+                          //editing controller of this TextField
+                          decoration: const InputDecoration(
+                              icon: Icon(
+                                  Icons.calendar_today), //icon of text field
+                              labelText: "Enter Date" //label text of field
+                              ),
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1950),
+                                lastDate: DateTime(2100));
+
+                            if (pickedDate != null) {
+                              print(pickedDate);
+                              String formattedDate =
+                                  DateFormat('dd-MM-yyyy').format(pickedDate);
+                              print(formattedDate);
+                              setState(() {
+                                dateInput.text = formattedDate;
+                              });
+                            } else {
+                              print("Date is not selected");
+                            }
+                          },
+                        ))),
+                    const Text(
+                      'Born Time : ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        height: MediaQuery.of(context).size.width / 5,
+                        child: Center(
+                            child: TextField(
+                          controller: timeInput,
+                          decoration: const InputDecoration(
+                              icon: Icon(
+                                  Icons.calendar_today), //icon of text field
+                              labelText: "Enter Time" //label text of field
+                              ),
+                          readOnly: true,
+                          onTap: () async {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              initialTime: TimeOfDay.now(),
+                              context: context,
+                            );
+                            if (pickedTime != null) {
+                              print(pickedTime.format(context));
+                              DateTime parsedTime = DateFormat.jm()
+                                  .parse(pickedTime.format(context).toString());
+                              print(parsedTime);
+                              String formattedTime =
+                                  DateFormat('HH:mm:ss').format(parsedTime);
+                              print(formattedTime);
+
+                              setState(() {
+                                timeInput.text = formattedTime;
+                              });
+                            } else {
+                              print("Time is not selected");
+                            }
+                          },
+                        ))),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Gender : ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text(
+                          'Male',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                        leading: Radio<Gender>(
+                          value: Gender.Male,
+                          groupValue: groupGender,
+                          onChanged: (Gender? value) {
+                            setState(() {
+                              groupGender = value;
+                            });
+                            print(value);
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text(
+                          'Female',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                        leading: Radio<Gender>(
+                          value: Gender.Female,
+                          groupValue: groupGender,
+                          onChanged: (Gender? value) {
+                            setState(() {
+                              groupGender = value;
+                            });
+                            print(value);
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text(
+                          'Other',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                        leading: Radio<Gender>(
+                          value: Gender.Other,
+                          groupValue: groupGender,
+                          onChanged: (Gender? value) {
+                            setState(() {
+                              groupGender = value;
+                            });
+                            print(value);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Hobby : ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Gaming',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Checkbox(
+                            value: checkSport,
+                            onChanged: (value) {
+                              setState(() {
+                                checkSport = value!;
+                              });
+                              print(checkSport);
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Reading ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Checkbox(
+                            value: checkSport,
+                            onChanged: (value) {
+                              setState(() {
+                                checkSport = value!;
+                              });
+                              print(checkSport);
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Music',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Checkbox(
+                            value: checkSport,
+                            onChanged: (value) {
+                              setState(() {
+                                checkSport = value!;
+                              });
+                              print(checkSport);
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    Text(
+                      'Age : ${age.toInt()}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Slider(
+                      min: 0,
+                      max: 100,
+                      activeColor: Colors.black,
+                      thumbColor: Colors.green,
+                      value: age,
+                      onChanged: ((value) {
+                        setState(() {
+                          age = value;
+                        });
+                        print('${age.toInt()}');
+                      }),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      const Text(
+                        'Slide to Accept Terms : ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Switch(
+                        value: switchValue,
+                        onChanged: ((value) {
+                          if (switchValue == true) {
+                            setState(() {
+                              switchValue = false;
+                            });
+                          } else {
+                            setState(() {
+                              switchValue = true;
+                            });
+                          }
+                        }),
+                        activeColor: Colors.green,
+                        inactiveThumbColor: Colors.redAccent,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    height: 50,
+                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                    child: ElevatedButton(
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        submit();
+                        showSnackBar('Successfully Registered');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyApp1()),
+                        );
+                      },
+                    )),
+              ],
+            )));
+  }
+
+  showSnackBar(String message) {
+    var SnackBarVariable = SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.black,
+        behavior: SnackBarBehavior.floating,
+        width: 390,
+        duration: const Duration(seconds: 5));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBarVariable);
+  }
+
+  void submit() {
+    setState(() {
+      name = nameText.text;
+      email = emailText.text;
+      password = passwordText.text;
+      date = dateInput.text;
+      time = timeInput.text;
+    });
+    print("Name : ${name}");
+    print("Email : ${email}");
+    print("Password : ${password}");
+    print("Date : ${date}");
+    print("Time : ${time}");
+    print("Gender : ${groupGender}");
+    print("Sports : ${checkSport}");
+    print("Age : ${age.toInt()}");
+  }
+}
+
+//shortcut for stateless is stl
+class MyApp1 extends StatelessWidget {
+  //stateless widget class
+  const MyApp1({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MyScreen1(); //return to statefullwidget of MyScreen class
+  }
+}
+
+//shortcut for stateless is stf
+class MyScreen1 extends StatefulWidget {
+  const MyScreen1({Key? key}) : super(key: key);
+
+  @override
+  State<MyScreen1> createState() => _MyScreenState1();
+}
+
+class _MyScreenState1 extends State<MyScreen1> {
+  String Digvijay = '';
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title:
+          'Digvijay', //app name shown from package name and for main title this is.
+      theme: ThemeData(primarySwatch: Colors.yellow), //theme of app
+      home: Scaffold(
+        //scaffold
+        appBar: AppBar(
+          //appbar for show scaffold title
+          leading: Icon(
+            Icons.arrow_back_ios,
+          ),
+          title: const Text('Details you have entered'), //title of scaffold
+          centerTitle: true,
+        ),
+
+        body: Column(children: [
+          Center(
+            child: Padding(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  Text(name),
+                  Text(email),
+                  Text(password),
+                  Text(date),
+                  Text('$age'),
+                ],
+              ),
+            ),
+          )
+        ]),
+      ),
+    );
+  }
+}
