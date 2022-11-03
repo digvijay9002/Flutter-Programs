@@ -1,0 +1,100 @@
+//T-9-Take a Color Name from user and Display Background color same a users Value.
+
+import 'package:flutter/material.dart'; //importing packages in flutter
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: Colorapp(),
+    debugShowCheckedModeBanner: false,
+    title:
+        'T-9 Background Color', //app name shown from package name and for main title this is.
+    theme: ThemeData(primarySwatch: Colors.yellow),
+  )); //for run a code here class Colorapp for run
+}
+
+//shortcut for stateless is stl
+class Colorapp extends StatelessWidget {
+  //stateless widget class
+  const Colorapp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MyScreen(); //return to statefullwidget of MyScreen class
+  }
+}
+
+//shortcut for stateless is stf
+class MyScreen extends StatefulWidget {
+  const MyScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MyScreen> createState() => _MyScreenState();
+}
+
+class _MyScreenState extends State<MyScreen> {
+  Color mycolor = Colors.white;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //scaffold
+      appBar: AppBar(
+        //appbar for show scaffold title
+        title: const Text('Change Background'), //title of scaffold
+        backgroundColor: Color.fromARGB(255, 218, 232, 24),
+      ),
+      body: Container(
+        decoration: new BoxDecoration(color: mycolor),
+        child: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Customize'),
+                      content: SingleChildScrollView(
+                        child: ColorPicker(
+                          pickerColor: mycolor, //default color
+                          onColorChanged: (Color color) {
+                            //on color picked
+                            setState(() {
+                              mycolor = color;
+                            });
+                          },
+                        ),
+                      ),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          child: const Text('Change'),
+                          onPressed: () {
+                            Navigator.of(context).pop(); //dismiss the color picker
+                            print(mycolor);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+            style: OutlinedButton.styleFrom(
+              primary: Color.fromARGB(255, 255, 255, 255), // Background color
+              shape: StadiumBorder(
+                side: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1),
+              ),
+            ),
+            child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                child: Text(
+                  'Click Here!',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'RobotoMono',
+                      fontSize: 18),
+                )),
+          ),
+        ),
+      ),
+    );
+  }
+}
