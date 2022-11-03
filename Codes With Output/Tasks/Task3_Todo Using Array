@@ -1,0 +1,86 @@
+//T-3 To do app (One text field and Display data in list view also delete button -using shared preferences)
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'T-3 TODO app',
+      theme: ThemeData(
+        primarySwatch: Colors.yellow,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  List todo = [];
+  var _todoController = TextEditingController();
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("ToDo app"),
+        ),
+        body: Column(
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                    width: 390,
+                    child: TextField(
+                      controller: _todoController,
+                    )),
+              ],
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    todo.add(_todoController.text);
+                    _todoController.text = "";
+                  });
+                },
+                child: Text("Add")),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: todo.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(todo[index]),
+                        leading: Icon(
+                          Icons.rounded_corner,
+                          color: Colors.black,
+                        ),
+                        trailing: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                todo.removeAt(index);
+                              });
+                            },
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            )),
+                      ),
+                    );
+                  }),
+            )
+          ],
+        )
+        // This trailing comma makes auto-formatting nicer for build methods.
+        );
+  }
+}
