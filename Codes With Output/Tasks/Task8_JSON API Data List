@@ -1,0 +1,93 @@
+import 'dart:convert';
+import 'package:flutter/material.dart'; //importing packages in flutter
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(MaterialApp(
+    home: MyApp(),
+    title: 'API', //app name shown from package name and for main title this is.
+    theme: ThemeData(primarySwatch: Colors.cyan),
+    debugShowCheckedModeBanner: false,
+  )); //for run a code here class MyApp for run
+}
+
+//shortcut for stateless is stl
+class MyApp extends StatelessWidget {
+  //stateless widget class
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MyScreen(); //return to statefullwidget of MyScreen class
+  }
+}
+
+//shortcut for stateless is stf
+class MyScreen extends StatefulWidget {
+  const MyScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MyScreen> createState() => _MyScreenState();
+}
+
+class _MyScreenState extends State<MyScreen> {
+  var data = [];
+  var images = [];
+
+  @override
+  void initState() {
+    api1();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //scaffold
+      appBar: AppBar(
+        //appbar for show scaffold title
+        iconTheme: IconThemeData(color: Colors.white, size: 32),
+        centerTitle: true,
+        title: Text(
+          'JSON API DATA',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontFamily: 'Comic Sans MS',
+              fontWeight: FontWeight.bold),
+        ), //title of scaffold
+        backgroundColor: Color.fromARGB(255, 3, 7, 20),
+      ),
+      body: ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            return Card(
+              child: ListTile(
+                leading: Image.network(
+                  '${data[index]['image']}',
+                  height: 60,
+                  width: 70,
+                ),
+                title: Text(
+                  "User: ${data[index]['username']}",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text("Gender: ${data[index]['gender']}"
+                    "\nEmail :${data[index]['email']}"),
+              ),
+            );
+          }),
+    );
+  }
+
+  void api1() async {
+    var url = Uri.parse('https://dummyjson.com/users/');
+    var response = await http.get(url);
+    var jsonDecode = json.decode(response.body)["users"];
+    setState(() {
+      for (int i = 0; i < jsonDecode.length; i++) {
+        data.add(jsonDecode[i]);
+      }
+    });
+  }
+}
